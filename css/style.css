@@ -1,0 +1,88 @@
+/*    HW Assignment 4
+        File: style.css
+        Joshua Sullivan, Joshua_Sullivan1@student.uml.edu
+        11/15/2021   
+        This css file stylizes the code in index.html
+*/
+
+/* Stylizes the page title */
+h1 {
+    margin-top: 0.2%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    text-align: center;
+    font-weight: bolder;
+    color: darkviolet;
+    font-family: sans-serif;
+}
+
+#ver_title {
+    color: red;
+    font-family: sans-serif;
+}
+
+#hor_title {
+    color: blue;
+    font-family: sans-serif;
+}
+
+form {
+    display: inline;
+    flex-flow: row wrap;
+    align-items: center;
+    font-family: sans-serif;
+}
+
+h2{
+    width: 100%;    
+}
+
+#submit {
+    margin-top: 10px;
+    display: block;
+    font-weight: bold;
+}
+
+label {
+    padding: 3px;
+}
+
+button {
+    font-weight: bold;
+}
+
+#scrollbox {
+    overflow: auto;
+    width: 1200px;
+    height: 500px;
+}
+
+table, th, thead{
+    margin: 10px;
+    border:1px solid black;
+    border-collapse: collapse;
+    font-size: larger;
+}
+
+td{
+    text-align: center;
+    border:1px solid black;
+    min-width: 20px;
+}
+
+/*Multiplier row displayed as blue*/
+tr:first-child {
+    color: white;
+    background-color: blue;
+}
+
+/*Multiplicand row displayed as blue*/
+td:first-child {
+    color: white;
+    background-color: red;
+}
+
+/*Corner box styled purple*/
+tr:first-child td:first-child{
+    background-color: darkviolet;
+}

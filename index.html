@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!--    HW Assignment 4
+        File: index.html
+        Joshua Sullivan, Joshua_Sullivan1@student.uml.edu
+        11/15/2021   
+        This webpage generates a multipliction table from four values given by the user. It will 
+        validate the input from the user before building the table.
+-->
+
+<html lang="en">
+    <head>
+        <title>Multiplication Table</title>
+        <link href="css/style.css" rel="stylesheet">
+        <meta charset="UTF-8">
+        <meta name="keywords" content="Multiplier, Multiplicand">
+        <meta name="author" content="Joshua Sullivan">
+    </head>
+
+    <body>
+        <div id="wrapper">
+            <header>
+                <!--Page Title-->
+                <h1>Multiplication Table Generator</h1>
+            </header>
+            
+            <div id="content">
+                <!--Form for multiplier input-->
+                <form id="full_form">
+                    <h2 id= "hor_title">Multiplier (Column)</h2>            
+                    <label for="f_hnum">Starting number:</label><br>
+                    <input type="number" id="f_hnum" name="f_hnum" required><br>
+                    <label for="l_hnum">Ending number:</label><br>
+                    <input type="number" id="l_hnum" name="l_hnum" required>
+
+                    <h2 id="ver_title">Multiplicand (Row)</h2> 
+                    <label for="f_vnum">Starting number:</label><br>
+                    <input type="number" id="f_vnum" name="f_vnum" required><br>
+                    <label for="l_vnum">Ending number:</label><br>
+                    <input type="number" id="l_vnum" name="l_vnum" required>
+
+                </form>
+
+                <br>
+                
+                <!--Paragraph for error notification from table.js if necessary-->
+                <p id='notif'></p>
+
+                <!--Submit button checks the validity of the input then, if valid, builds the table-->
+                <button onclick="check()">Submit</button>
+                
+                <!--Multiplication table generated in table.js placed here-->
+                <div id = "scrollbox">
+                    <table id="mult_table"></table>
+                </div>
+
+            </div>
+        </div>
+    </body>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="jquery-validation-1.19.3\dist\jquery.validate.js"></script>
+    <script src="js/table.js"></script>
+</html>
