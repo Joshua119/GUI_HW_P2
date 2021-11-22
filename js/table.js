@@ -1,11 +1,63 @@
-/*    HW Assignment 4
+/*    HW Assignment 4 part 2
         File: table.js
         Joshua Sullivan, Joshua_Sullivan1@student.uml.edu
         11/15/2021   
-        This javascript file builds the multiplication table for the file index.html and validates the users input
+        This javascript file builds sliders for the input fields and once the submit button is pressed it 
+        builds the multiplication table in a separate tab for the file index.html and validates the users input.
+        It also deletes specified tabs.
 */
 
-$().ready(function() {
+let tabcount = 0;
+
+$(function() {
+
+    //setting for the four sliders
+    $("#f_hnum_slider").slider({
+        min: -100,
+        max: 100,
+        value: 0,
+        change: (function(e) {
+            document.getElementById("f_hnum").value = $('#f_hnum_slider').slider("value");
+        })
+    });
+    $("#f_vnum_slider").slider({
+        min: -100,
+        max: 100,
+        value: 0,
+        change: (function(e) {
+            document.getElementById("f_vnum").value = $('#f_vnum_slider').slider("value");
+        })
+    });
+    $("#l_hnum_slider").slider({
+        min: -100,
+        max: 100,
+        value: 0,
+        change: (function(e) {
+            document.getElementById("l_hnum").value = $('#l_hnum_slider').slider("value");
+        })
+    });
+    $("#l_vnum_slider").slider({
+        min: -100,
+        max: 100,
+        value: 0,
+        change: (function(e) {
+            document.getElementById("l_vnum").value = $('#l_vnum_slider').slider("value");
+        })
+    });
+
+    //changes sliders when input changes
+    $("#f_hnum").on("input", function() {
+        $('#f_hnum_slider').slider("value", (document.getElementById("f_hnum").value));
+    });
+    $("#l_hnum").on("input", function() {
+        $('#l_hnum_slider').slider("value", (document.getElementById("l_hnum").value));
+    });
+    $("#f_vnum").on("input", function() {
+        $('#f_vnum_slider').slider("value", (document.getElementById("f_vnum").value));
+    });
+    $("#f_hnum").on("input", function() {
+        $('#l_vnum_slider').slider("value", (document.getElementById("l_vnum").value));
+    });
 
     //Checks that the ending column value is larger than the starting column value
     $.validator.addMethod('h_larger', function(value) {
@@ -29,7 +81,7 @@ $().ready(function() {
         return last > first;
     });
 
-    //Checks that the input is valid
+    //Checks that the form input is valid
     $('#full_form').validate({
         rules: {
             f_hnum: {
@@ -76,38 +128,102 @@ $().ready(function() {
             },
         }
     });
+
+    //checks that the ending tab to be deleted is greater or equal to the starting tab to be deleted
+    $.validator.addMethod('del_greater', function(value) {
+        var first = parseInt($('#del_start').val())
+        var last = parseInt($('#del_start').val())
+
+        if(!last)               //If second value has not been entered yet
+            return true;
+
+        return last >= first;
+    });
+
+    //Checks that the starting tab exists
+    $.validator.addMethod('Stab_exists', function(value) {
+        var first = parseInt($('#del_start').val())
+        //var real_tab =
+        return first <= tabcount;
+    });
+
+    //Checks that the ending tab exists
+    $.validator.addMethod('Etab_exists', function(value) {
+        var last = parseInt($('#del_start').val())
+        return last <= tabcount;
+    });
+
+    //checks that the deletion input is valid
+    $('#del').validate({
+        rules: {
+            del_start: {
+                required: true,
+                digits: true,
+                del_greater: true,
+                min: 1,
+                Stab_exists: true,
+            },
+            del_end: {
+                required: true,
+                digits: true,
+                del_greater: true,
+                min: 1,
+                Etab_exists: true,
+            },
+        },
+        messages: {
+            del_start: {
+                required: "Please enter a starting tab to delete",
+                digits: "Please enter a digit",
+                del_greater: "Please enter an starting integer that is less than the ending integer",
+                min: "Please enter an integer greater than 0",
+                Stab_exists: "please enter a digit that corresponds to a current tab",
+            },
+            del_end: {
+                required: "Please enter an ending tab to delete",
+                digits: "Please enter a digit",
+                del_greater: "Please enter an ending integer that is greater than the starting integer",
+                min: "Please enter an integer greater than 0",
+                Etab_exists: "please enter a digit that corresponds to a current tab",
+            },
+        }
+    });
 });
 
 //Verifies form validity before building the table
 function check() {
     if( $('#full_form').valid() ) {
-        table('mult_table');
+          table();
     }
 }
 
-function table(id) {
+//Builds the table in a new tab
+function table() {
+    tabcount = tabcount + 1;
 
-    //Gets the entered numbers from the forms
+    //gets the input values
     var f_hnum = parseInt(document.getElementById("f_hnum").value)
     var l_hnum = parseInt(document.getElementById("l_hnum").value)
     var f_vnum = parseInt(document.getElementById("f_vnum").value)
     var l_vnum = parseInt(document.getElementById("l_vnum").value)
 
-    //Erases previous Table
-    if (document.getElementById(id)) { 
-        var m_table = document.getElementById(id);
-        var rows = m_table.rows.length;
-        for (var i = 0; i < rows; i++) {
-            m_table.deleteRow(0);
-        }
-    }
+    //Builds the new tab and table
+    $('<div>', {
+        id: '#table' + tabcount,
+    }).appendTo('#content');
 
-    //Erases any previous error messages
-    document.getElementById('notif').innerHTML = '' 
+    $("#myTabs").tabs();
+    $("#tabs").tabs("add", "#table" + tabcount, "Table" + tabcount + ":" + f_hnum + "," + l_hnum + "," + f_vnum + "," + l_vnum);
 
-    //Creates the new table
+    $('<table>', {
+        id: '#mult_table' + tabcount,
+    }).appendTo('#table' + tabcount);
+
+    table_id = '#mult_table' + tabcount;
+
+    //Fills in the new table
     for(let i = f_vnum; i <= l_vnum; i++) {
-        let row = document.getElementById(id).insertRow(i-f_vnum); // create row
+        let row = document.getElementById(table_id).insertRow(i-f_vnum); // create row
         for(let j = f_hnum; j <= l_hnum; j++) {
             let k = i * j
             var col = row.insertCell(j-f_hnum); //add cell to row
@@ -116,10 +232,30 @@ function table(id) {
         var col = row.insertCell(0); 
         col.innerHTML = i            // Multiplicand 
     }
-    let row = document.getElementById(id).insertRow(0);
+    let row = document.getElementById(table_id).insertRow(0);
     for (let j = l_hnum; j >= f_hnum; j--) {
         var col = row.insertCell(0); //add cell to row
         col.innerHTML = j   //multiplier
     }
     var col = row.insertCell(0);
+}
+
+//Verifies deletion form validity before building the table
+function del() {
+    if( $('#del').valid() ) {
+        deleteTable();
+  }
+}
+
+//deletes specified table tabs
+function deleteTable() {
+    start = document.getElementById("del_start").value
+    end = document.getElementById("del_end").value
+
+    for(let i = start; i <= end; i++) {
+        if ($('#table' + i).length !== 0) {
+            $("#tabs").tabs("remove", "#table" + i);
+        }
+
+    }
 }

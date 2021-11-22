@@ -1,8 +1,8 @@
-/*    HW Assignment 4
+/*    HW Assignment 4 part 2
         File: style.css
         Joshua Sullivan, Joshua_Sullivan1@student.uml.edu
         11/15/2021   
-        This css file stylizes the code in index.html
+        This css file stylizes the code in index.html and table.js
 */
 
 /* Stylizes the page title */
@@ -23,6 +23,11 @@ h1 {
 
 #hor_title {
     color: blue;
+    font-family: sans-serif;
+}
+
+#del_title {
+    color: lawngreen;
     font-family: sans-serif;
 }
 
@@ -85,4 +90,41 @@ td:first-child {
 /*Corner box styled purple*/
 tr:first-child td:first-child{
     background-color: darkviolet;
+}
+
+input {
+    width: 80px;
+    text-align: center;
+}
+
+#f_hnum_slider {
+    width: 400px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#f_vnum_slider {
+    width: 400px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#l_hnum_slider {
+    width: 400px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#l_vnum_slider {
+    width: 400px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#del_end {
+    margin-top: 10px;
+}
+
+#del_btn {
+    margin-top: 10px;
 }

@@ -1,63 +1,85 @@
 <!DOCTYPE html>
-<!--    HW Assignment 4
+<!--    HW Assignment 4 part 2
         File: index.html
         Joshua Sullivan, Joshua_Sullivan1@student.uml.edu
         11/15/2021   
-        This webpage generates a multipliction table from four values given by the user. It will 
-        validate the input from the user before building the table.
+        This webpage generates a multipliction table from four values given by the user 
+        though either an input field or a slider. It will validate the input from the 
+        user before building the table in another tab.
 -->
 
 <html lang="en">
     <head>
         <title>Multiplication Table</title>
         <link href="css/style.css" rel="stylesheet">
+        <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" media="screen" />
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.js"></script>
+        <script type="text/javascript">
+            $(function() {
+                $("#tabs").tabs();
+            });
+        </script>
+        <script src="jquery-validation-1.19.3\dist\jquery.validate.js"></script>
+        <script src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script> 
+        <script src="js/table.js"></script>
+
         <meta charset="UTF-8">
         <meta name="keywords" content="Multiplier, Multiplicand">
         <meta name="author" content="Joshua Sullivan">
     </head>
 
     <body>
+
         <div id="wrapper">
             <header>
                 <!--Page Title-->
                 <h1>Multiplication Table Generator</h1>
             </header>
             
-            <div id="content">
-                <!--Form for multiplier input-->
-                <form id="full_form">
-                    <h2 id= "hor_title">Multiplier (Column)</h2>            
-                    <label for="f_hnum">Starting number:</label><br>
-                    <input type="number" id="f_hnum" name="f_hnum" required><br>
-                    <label for="l_hnum">Ending number:</label><br>
-                    <input type="number" id="l_hnum" name="l_hnum" required>
+            <div id="tabs">
+                <ul id="tabs_list">
+                   <li><a href="#content">Generator</a></li>
+                </ul>
 
-                    <h2 id="ver_title">Multiplicand (Row)</h2> 
-                    <label for="f_vnum">Starting number:</label><br>
-                    <input type="number" id="f_vnum" name="f_vnum" required><br>
-                    <label for="l_vnum">Ending number:</label><br>
-                    <input type="number" id="l_vnum" name="l_vnum" required>
+                <div id="content">
+                    <!--Form for multiplier input-->
+                    <form id="full_form">
+                        <h2 id= "hor_title">Multiplier (Column)</h2>            
+                        <label for="f_hnum">Starting number:</label>
+                        <input type="number" id="f_hnum" name="f_hnum" value="0" required><br>
+                        <div id="f_hnum_slider"></div>
+    
+                        <label for="l_hnum">Ending number:</label>
+                        <input type="number" id="l_hnum" name="l_hnum" value="0" required><br>
+                        <div id="l_hnum_slider"></div>
+    
+                        <h2 id="ver_title">Multiplicand (Row)</h2> 
+                        <label for="f_vnum">Starting number:</label>
+                        <input type="number" id="f_vnum" name="f_vnum" value="0" required><br>
+                        <div id="f_vnum_slider"></div>
+    
+                        <label for="l_vnum">Ending number:</label>
+                        <input type="number" id="l_vnum" name="l_vnum" value="0" required><br>
+                        <div id="l_vnum_slider"></div>
+                    </form>
+    
+                    <!--Submit button checks the validity of the input then, if valid, builds the table in a new tab-->
+                    <button id="btn" onclick="check()">Submit</button>
 
-                </form>
+                    <!--Form for tabs to be deleted-->
+                    <form id="del">
+                        <h2 id= "del_title">Delete Tabs</h2>            
+                        <label for="del_start">Starting Tab:</label>
+                        <input type="number" id="del_start" name="del_start" value="1" required><br>
 
-                <br>
-                
-                <!--Paragraph for error notification from table.js if necessary-->
-                <p id='notif'></p>
+                        <label for="del_end">Ending Tab: </label>
+                        <input type="number" id="del_end" name="del_end" value="1" required><br>
+                    </form>
 
-                <!--Submit button checks the validity of the input then, if valid, builds the table-->
-                <button onclick="check()">Submit</button>
-                
-                <!--Multiplication table generated in table.js placed here-->
-                <div id = "scrollbox">
-                    <table id="mult_table"></table>
+                    <!--Delete Table button checks the validity of the input then, if valid, deletes the specified tables-->
+                    <button id="del_btn" onclick="del()">Delete Table: </button>
                 </div>
-
             </div>
         </div>
     </body>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="jquery-validation-1.19.3\dist\jquery.validate.js"></script>
-    <script src="js/table.js"></script>
 </html>
